@@ -32,9 +32,9 @@ const buttons = document.querySelectorAll(".number");
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     const value = button.textContent;
-    // 将新的数字追加到输入框的值的末尾
+
     $templateInput.value += value;
-    // 将值保存到 Chrome Storage
+
     chrome.storage.sync.set({ memoryScreenValue: $templateInput.value });
   });
 });
