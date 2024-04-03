@@ -2,6 +2,7 @@
   "manifest_version": 3,
   "name": "LightCalculator",
   "version": "1.0.0",
+  "permissions": ["storage"],
   "description": "Chrome Light Calculator",
   "action": {
     "default_popup": "index.html"

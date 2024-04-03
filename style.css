@@ -22,7 +22,7 @@ input {
   height: 100px;
   margin: 0;
   background-color: #424242;
-  font-size: 2rem;
+  font-size: 3rem;
   color: #ffffff;
   text-align: end;
   border: none;
@@ -43,13 +43,4 @@ input {
   border: 1px solid rgb(43, 43, 43);
   font-size: 1.5rem;
   cursor: pointer;
-}
-
-.container .btn button:nth-child(17) {
-  width: 130px;
-  height: 60px;
-}
-.container .btn button:nth-child(18) {
-  width: 130px;
-  height: 60px;
 }
