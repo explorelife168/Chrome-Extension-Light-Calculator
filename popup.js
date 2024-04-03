@@ -1,7 +1,6 @@
 // 內容腳本執行
 
 // ----------------------------- input -----------------------------
-// 抓ID得到DOM
 const $templateInput = document.querySelector("#review-template");
 
 // 處理使用者輸入並儲存模板 , DOM監聽事件，取輸入target值，使用 chrome.storage 同步設定
@@ -25,7 +24,6 @@ window.onload = () => {
 };
 
 // ----------------------------- button input -----------------------------
-
 const buttons = document.querySelectorAll(".number");
 // TODO:
 // button input
@@ -40,7 +38,6 @@ buttons.forEach((button) => {
 });
 
 // ----------------------------- Memory Clean -----------------------------
-
 // button clean
 const clean = document.querySelector(".clean");
 clean.addEventListener("click", () => {
@@ -54,4 +51,21 @@ document.addEventListener("keydown", (event) => {
     $templateInput.value = "";
     chrome.storage.sync.set({ memoryScreenValue: $templateInput.value });
   }
+});
+
+// ----------------------------- button change color -----------------------------
+
+const changeColorBtn = document.querySelectorAll(".calculate");
+
+let originalColorBtn;
+
+changeColorBtn.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (originalColorBtn) {
+      originalColorBtn.style.backgroundColor = "#424242";
+    }
+    button.style.backgroundColor = "#777777";
+    originalColorBtn = button;
+    $templateInput.value = "";
+  });
 });
