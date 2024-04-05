@@ -48,17 +48,30 @@ let beforeNum = "";
 
 // ----------------------------- button input -----------------------------
 
+let isFirstInput = true; // 添加一个标志，表示是否为第一次输入
+
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
-    for (let i = 0; i < $templateInput.value.length; i++) {
-      if ($templateInput.value[i] === "." || $templateInput.value[0] === 0) {
-        return;
-      }
-    }
     const value = button.textContent;
+
+    if (
+      (value === "." && $templateInput.value.includes(".")) ||
+      (value === "." && $templateInput.value === "")
+    ) {
+      return;
+    }
+
+    if (
+      value === "0" &&
+      $templateInput.value[0] === "0" &&
+      $templateInput.value.length < 2
+    ) {
+      return;
+    }
+
     $templateInput.value += value;
-    console.log(typeof $templateInput.value);
-    // chrome.storage.sync.set({ memoryScreenValue: $templateInput.value });
+
+    isFirstInput = false;
 
     calculateBtn.forEach((button) => {
       button.style.backgroundColor = "#424242";
