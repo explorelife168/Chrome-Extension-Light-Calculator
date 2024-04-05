@@ -2,6 +2,9 @@
 
 // ----------------------------- input -----------------------------
 const $templateInput = document.querySelector("#review-template");
+if (!$templateInput) {
+  console.log("undefined");
+}
 
 // 處理使用者輸入並儲存模板 , DOM監聽事件，取輸入target值，使用 chrome.storage 同步設定
 $templateInput.addEventListener("input", (e) => {
@@ -14,8 +17,7 @@ async function fetchData() {
   let { memoryScreenValue } = await chrome.storage.sync.get([
     "memoryScreenValue",
   ]);
-  $templateInput.value =
-    memoryScreenValue !== undefined ? memoryScreenValue : "";
+  $templateInput.value = memoryScreenValue ?? "";
 }
 
 // 由於每次重新打開 popup，就等同打開新視窗，所以使用 onload 重新取得資料
