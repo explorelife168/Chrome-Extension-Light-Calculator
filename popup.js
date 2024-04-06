@@ -26,6 +26,7 @@ if (!equal) {
 
 let calculateStatus = "";
 let beforeNum = "";
+let isFirstInput = true;
 // ----------------------------- input -----------------------------
 // 處理使用者輸入並儲存模板 , DOM監聽事件，取輸入target值，使用 chrome.storage 同步設定
 // $templateInput.addEventListener("input", (e) => {
@@ -48,31 +49,27 @@ let beforeNum = "";
 
 // ----------------------------- button input -----------------------------
 
-let isFirstInput = true; // 添加一个标志，表示是否为第一次输入
-
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     const value = button.textContent;
 
     if (
-      (value === "." && $templateInput.value.includes(".")) ||
-      (value === "." && $templateInput.value === "")
+      (value === "." && $templateInput.value.includes(".")) || // 小數點不重複
+      (value === "." && $templateInput.value === "") || // 數字起始不為小數點
+      (value === "0" && $templateInput.value === "0") // 數字1,2 不為連續00
+      // ($templateInput.value[0] === "0" && //第一個數字為0第二個必須為"."
+      //   value !== "." &&
+      //   $templateInput.value.length < 2)
     ) {
       return;
+    } else if (value !== "." && $templateInput.value === "0") {
+      console.log("test");
+      $templateInput.value = value;
+    } else {
+      $templateInput.value += value;
     }
-
-    if (
-      value === "0" &&
-      $templateInput.value[0] === "0" &&
-      $templateInput.value.length < 2
-    ) {
-      return;
-    }
-
-    $templateInput.value += value;
 
     isFirstInput = false;
-
     calculateBtn.forEach((button) => {
       button.style.backgroundColor = "#424242";
     });
@@ -83,7 +80,11 @@ buttons.forEach((button) => {
 
 clean.addEventListener("click", () => {
   $templateInput.value = "";
-  console.log("c", typeof $templateInput.value);
+  calculateStatus = "";
+  beforeNum = "";
+  calculateBtn.forEach((button) => {
+    button.style.backgroundColor = "#424242";
+  });
 });
 
 // keydown clean
@@ -100,15 +101,15 @@ let originalColorBtn;
 
 calculateBtn.forEach((button) => {
   button.addEventListener("click", () => {
-    if (originalColorBtn) {
+    if (beforeNum || !$templateInput.value) {
+      return;
+    } else if (originalColorBtn) {
       originalColorBtn.style.backgroundColor = "#424242";
     }
     button.style.backgroundColor = "#777777";
     originalColorBtn = button;
 
     calculateStatus = button.textContent;
-
-    if (beforeNum) return;
     beforeNum = $templateInput.value;
     console.log(beforeNum);
 
@@ -122,29 +123,31 @@ equal.addEventListener("click", () => {
   //   "parseInt($templateInput.value):",
   //   parseInt($templateInput.value)
   // );
-  if ($templateInput.value === undefined) {
+  if (!$templateInput.value) {
     return;
   } else if (calculateStatus === "+") {
     $templateInput.value = (
       Number(beforeNum) + Number($templateInput.value)
-    ).toFixed(2);
+    ).toFixed(9);
     console.log(typeof $templateInput.value);
   } else if (calculateStatus === "-") {
     $templateInput.value = (
       Number(beforeNum) - Number($templateInput.value)
-    ).toFixed(2);
+    ).toFixed(9);
     console.log(typeof $templateInput.value);
   } else if (calculateStatus === "X") {
     $templateInput.value = (
       Number(beforeNum) * Number($templateInput.value)
-    ).toFixed(2);
+    ).toFixed(9);
     console.log(typeof $templateInput.value);
   } else if (calculateStatus === "/") {
     $templateInput.value = (
       Number(beforeNum) / Number($templateInput.value)
-    ).toFixed(2);
+    ).toFixed(9);
     console.log(typeof $templateInput.value);
   }
+
+  $templateInput.value = parseFloat($templateInput.value);
   console.log("=:", typeof $templateInput.value);
   // chrome.storage.sync.set({ memoryScreenValue: $templateInput.value });
   calculateStatus = "";
