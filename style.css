@@ -44,4 +44,7 @@ input {
   font-size: 1.5rem;
   cursor: pointer;
 }
-4
+
+.container .btn button:last-child {
+  width: 270px;
+}

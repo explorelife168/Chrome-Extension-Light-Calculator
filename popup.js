@@ -63,7 +63,7 @@ buttons.forEach((button) => {
     ) {
       return;
     } else if (value !== "." && $templateInput.value === "0") {
-      console.log("test");
+      // 如果為0，輸入數字則會蓋過
       $templateInput.value = value;
     } else {
       $templateInput.value += value;
