@@ -57,9 +57,6 @@ buttons.forEach((button) => {
       (value === "." && $templateInput.value.includes(".")) || // 小數點不重複
       (value === "." && $templateInput.value === "") || // 數字起始不為小數點
       (value === "0" && $templateInput.value === "0") // 數字1,2 不為連續00
-      // ($templateInput.value[0] === "0" && //第一個數字為0第二個必須為"."
-      //   value !== "." &&
-      //   $templateInput.value.length < 2)
     ) {
       return;
     } else if (value !== "." && $templateInput.value === "0") {
@@ -87,6 +84,7 @@ clean.addEventListener("click", () => {
   });
 });
 
+// TODO: keydown clean
 // keydown clean
 // document.addEventListener("keydown", (event) => {
 //   if (event.key === "c" || event.key === "C") {
@@ -108,21 +106,14 @@ calculateBtn.forEach((button) => {
     }
     button.style.backgroundColor = "#777777";
     originalColorBtn = button;
-
     calculateStatus = button.textContent;
     beforeNum = $templateInput.value;
     console.log(beforeNum);
-
     $templateInput.value = "";
   });
 });
 
 equal.addEventListener("click", () => {
-  // console.log("parseInt(beforeNum):", parseInt(beforeNum));
-  // console.log(
-  //   "parseInt($templateInput.value):",
-  //   parseInt($templateInput.value)
-  // );
   if (!$templateInput.value) {
     return;
   } else if (calculateStatus === "+") {
@@ -149,7 +140,6 @@ equal.addEventListener("click", () => {
 
   $templateInput.value = parseFloat($templateInput.value);
   console.log("=:", typeof $templateInput.value);
-  // chrome.storage.sync.set({ memoryScreenValue: $templateInput.value });
   calculateStatus = "";
   beforeNum = "";
 });
