@@ -31,7 +31,7 @@ let originalColorBtn;
 
 // 數字點擊事件監聽
 buttons.forEach((button) => {
-  button.addEventListener("click", () => handleClick(this));
+  button.addEventListener("click", () => handleClick(button));
 });
 
 // 檢查輸入是否該忽略
@@ -51,8 +51,8 @@ function resetCalculateBtnStyles() {
 }
 
 // 數字點擊事件處理
-function handleClick(this) {
-  const value = this.textContent;
+function handleClick(button) {
+  const value = button.textContent;
   if (ShouldIgnoreInput(value)) return;
   if (value !== "." && $templateInput.value === "0") {
     // 如果為0，輸入數字則會蓋過
