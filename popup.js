@@ -31,7 +31,7 @@ let originalColorBtn;
 
 // 數字點擊事件監聽
 buttons.forEach((button) => {
-  button.addEventListener("click", () => handleClick(button));
+  button.addEventListener("click", handleClick);
 });
 
 // 檢查輸入是否該忽略
@@ -51,8 +51,8 @@ function resetCalculateBtnStyles() {
 }
 
 // 數字點擊事件處理
-function handleClick(button) {
-  const value = button.textContent;
+function handleClick() {
+  const value = this.textContent;
   if (ShouldIgnoreInput(value)) return;
   if (value !== "." && $templateInput.value === "0") {
     // 如果為0，輸入數字則會蓋過
@@ -73,19 +73,19 @@ clean.addEventListener("click", () => {
 
 // 計算符號點擊監聽
 calculateBtn.forEach((button) => {
-  button.addEventListener("click", () => handleClickCalculate(button));
+  button.addEventListener("click", handleClickCalculate);
 });
 
 // 計算符號點擊事件處理
-function handleClickCalculate(button) {
+function handleClickCalculate() {
   if (beforeNum || !$templateInput.value) {
     return;
   } else if (originalColorBtn) {
     originalColorBtn.style.backgroundColor = "#424242";
   }
-  button.style.backgroundColor = "#777777";
-  originalColorBtn = button;
-  calculateStatus = button.textContent;
+  this.style.backgroundColor = "#777777";
+  originalColorBtn = this;
+  calculateStatus = this.textContent;
   beforeNum = $templateInput.value;
   $templateInput.value = "";
 }
